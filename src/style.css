@@ -158,3 +158,20 @@ a.most-searched-city {
   top: 20px;
   width: 170px;
 }
+
+/* ----- Info Box ----- */
+.info-list {
+  font-size: 18px;
+  line-height: 2.5;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.info-icon {
+  width: 45px;
+}
+
+.info-title {
+  font-weight: bold;
+}
