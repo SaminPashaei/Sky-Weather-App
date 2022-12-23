@@ -24,6 +24,8 @@
       crossorigin="anonymous"
     ></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
     <link rel="stylesheet" href="src/style.css" />
 
     <title>Sky Weather App</title>
@@ -34,14 +36,15 @@
         <!----- Search Part ----->
         <!----- Search Box ----->
         <div class="col-md-6">
-          <form class="input-group mb-3">
+          <form class="input-group mb-3" id="search-city-form">
             <input
               type="search"
               class="form-control search-box"
               placeholder="Enter a city"
+              id="searched-city-name"
             />
 
-            <button class="btn btn-outline-secondary" type="button">
+            <button class="btn btn-outline-secondary location-button">
               <i class="fa-solid fa-location-crosshairs"></i>
             </button>
 
@@ -78,7 +81,8 @@
               <div class="row">
                 <div class="col-6">
                   <h1 class="current-temp mb-1">
-                    9<span class="degree-units"
+                    <span id="current-temp"></span>
+                    <span class="degree-units"
                       ><a href="#" class="disabled-degree-style">°C</a>
                       |
                       <a href="#" class="degree-style">°F</a>
@@ -86,16 +90,26 @@
                   </h1>
 
                   <h2 class="current-city mb-3">
-                    <button class="location-icon">
+                    <button class="location-icon location-button">
                       <i class="fa-solid fa-location-dot"></i>
                     </button>
-                    Tehran
+                    <span id="city-name"></span>
                   </h2>
 
                   <ul class="current-data">
-                    <li>few clouds</li>
-                    <li>9 / 9 Feels like 8</li>
-                    <li>Friday, 12:45</li>
+                    <li
+                      class="weather-description"
+                      id="weather-description"
+                    ></li>
+                    <li>
+                      <span id="current-min-temp"></span>° /
+                      <span id="current-max-temp"></span>° Feels like
+                      <span id="current-feels-like"></span>°
+                    </li>
+                    <li class="last-update-time">
+                      Last updated on
+                      <span id="last-update-time"></span>
+                    </li>
                   </ul>
                 </div>
 
@@ -121,7 +135,9 @@
                     <img src="media/humidity.svg" class="info-icon" />
                     <span class="info-title">Humidity</span>
                   </div>
-                  <div class="col-6 text-end">34%</div>
+                  <div class="col-6 text-end">
+                    <span id="current-humidity"></span>%
+                  </div>
                 </li>
 
                 <li class="row">
@@ -129,7 +145,9 @@
                     <img src="media/barometer.svg" class="info-icon" />
                     <span class="info-title">Pressure</span>
                   </div>
-                  <div class="col-6 text-end">1024 Pa</div>
+                  <div class="col-6 text-end">
+                    <span id="current-pressure"></span> Pa
+                  </div>
                 </li>
 
                 <li class="row">
@@ -137,7 +155,9 @@
                     <img src="media/umbrella-wind.svg" class="info-icon" />
                     <span class="info-title">Wind Speed</span>
                   </div>
-                  <div class="col-6 text-end">2 km/h</div>
+                  <div class="col-6 text-end">
+                    <span id="current-wind-speed"></span> km/h
+                  </div>
                 </li>
 
                 <li class="row">
@@ -145,7 +165,9 @@
                     <img src="media/compass.svg" class="info-icon" />
                     <span class="info-title">Wind Degree</span>
                   </div>
-                  <div class="col-6 text-end">315°</div>
+                  <div class="col-6 text-end">
+                    <span id="current-wind-degree"></span>°
+                  </div>
                 </li>
 
                 <li class="row">
@@ -153,7 +175,9 @@
                     <img src="media/windsock.svg" class="info-icon" />
                     <span class="info-title">Wind Direction</span>
                   </div>
-                  <div class="col-6 text-end">NW</div>
+                  <div class="col-6 text-end" id="current-wind-direction">
+                    NW
+                  </div>
                 </li>
               </ul>
             </div>
@@ -270,7 +294,7 @@
                     <div class="col-6">
                       <ul class="horizon-list">
                         <li class="horizon-title">Sunrise</li>
-                        <li class="horizon-time">07:10</li>
+                        <li class="horizon-time" id="sunrise-time"></li>
                       </ul>
                     </div>
                   </div>
@@ -289,7 +313,7 @@
                     <div class="col-6">
                       <ul class="horizon-list">
                         <li class="horizon-title">Sunset</li>
-                        <li class="horizon-time">16:54</li>
+                        <li class="horizon-time" id="sunrise-time"></li>
                       </ul>
                     </div>
                   </div>
