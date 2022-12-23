@@ -41,10 +41,14 @@
               type="search"
               class="form-control search-box"
               placeholder="Enter a city"
+              autocomplete="off"
               id="searched-city-name"
             />
 
-            <button class="btn btn-outline-secondary location-button">
+            <button
+              class="btn btn-outline-secondary location-button"
+              type="button"
+            >
               <i class="fa-solid fa-location-crosshairs"></i>
             </button>
 
@@ -312,7 +316,7 @@
                     <div class="col-6">
                       <ul class="horizon-list">
                         <li class="horizon-title">Sunset</li>
-                        <li class="horizon-time" id="sunrise-time"></li>
+                        <li class="horizon-time" id="sunset-time"></li>
                       </ul>
                     </div>
                   </div>

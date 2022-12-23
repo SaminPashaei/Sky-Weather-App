@@ -22,7 +22,13 @@ function twoDigit(number) {
   return String(number).padStart(2, "0");
 }
 
-function updateDate(date) {
+function getHour(time) {
+  let timeHour = twoDigit(time.getHours());
+  let timeMinute = twoDigit(time.getMinutes());
+  return `${timeHour}:${timeMinute}`;
+}
+
+function getDay(time) {
   let dayName = [
     "Sunday",
     "Monday",
@@ -32,16 +38,12 @@ function updateDate(date) {
     "Friday",
     "Saturday",
   ];
-  let updateDay = dayName[date.getDay()];
-
-  let updateHour = twoDigit(date.getHours());
-  let updateMinute = twoDigit(date.getMinutes());
-  let updateFullTime = `${updateHour}:${updateMinute}`;
-
-  return `${updateDay}, ${updateFullTime}`;
+  return dayName[time.getDay()];
 }
 
 function getWeatherData(response) {
+  let updateDate = new Date(response.data.dt * 1000);
+
   document.querySelector("#current-temp").innerHTML = Math.round(
     response.data.main.temp
   );
@@ -57,9 +59,10 @@ function getWeatherData(response) {
   document.querySelector("#current-feels-like").innerHTML = Math.round(
     response.data.main.feels_like
   );
-  document.querySelector("#last-update-time").innerHTML = updateDate(
-    new Date(response.data.dt * 1000)
-  );
+  document.querySelector("#last-update-time").innerHTML = `${getDay(
+    updateDate
+  )}, ${getHour(updateDate)}`;
+
   document.querySelector("#current-humidity").innerHTML =
     response.data.main.humidity;
   document.querySelector("#current-pressure").innerHTML =
@@ -70,6 +73,13 @@ function getWeatherData(response) {
     response.data.wind.deg;
   document.querySelector("#current-wind-direction").innerHTML = windDirection(
     response.data.wind.deg
+  );
+
+  document.querySelector("#sunrise-time").innerHTML = getHour(
+    new Date(response.data.sys.sunrise * 1000)
+  );
+  document.querySelector("#sunset-time").innerHTML = getHour(
+    new Date(response.data.sys.sunset * 1000)
   );
 }
 
