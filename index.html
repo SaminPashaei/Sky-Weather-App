@@ -12,6 +12,13 @@
       crossorigin="anonymous"
     />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&family=Quicksand:wght@500&display=swap"
+      rel="stylesheet"
+    />
+
     <script
       src="https://kit.fontawesome.com/c3ee3d2d6a.js"
       crossorigin="anonymous"
@@ -23,12 +30,14 @@
   </head>
   <body>
     <div class="container">
-      <div class="row">
+      <div class="row wrapper">
+        <!----- Search Part ----->
+        <!----- Search Box ----->
         <div class="col-md-6">
-          <form class="input-group">
+          <form class="input-group mb-3">
             <input
               type="search"
-              class="form-control"
+              class="form-control search-box"
               placeholder="Enter a city"
             />
 
@@ -43,18 +52,18 @@
         </div>
 
         <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
+          <div class="card most-searched-card mb-3">
+            <div class="card-body most-searched-card-body">
               <div class="row">
-                <div class="col-4">Most Searched:</div>
+                <div class="col-4 most-searched-title">Most Searched:</div>
                 <div class="col-3">
-                  <a href="#">New York</a>
+                  <a href="#" class="most-searched-city">New York</a>
                 </div>
                 <div class="col-2">
-                  <a href="#">Paris</a>
+                  <a href="#" class="most-searched-city">Paris</a>
                 </div>
                 <div class="col-3">
-                  <a href="#">Frankfurt</a>
+                  <a href="#" class="most-searched-city">Frankfurt</a>
                 </div>
               </div>
             </div>
@@ -62,7 +71,7 @@
         </div>
 
         <div class="col-md-6">
-          <div class="card">
+          <div class="card default-card mb-3">
             <div class="card-body">
               <div class="row">
                 <div class="col-6">
@@ -91,7 +100,7 @@
         </div>
 
         <div class="col-md-6">
-          <div class="card">
+          <div class="card default-card mb-3">
             <div class="card-body">
               <div class="row">
                 <div class="col-6">
