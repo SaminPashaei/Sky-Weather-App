@@ -51,6 +51,7 @@
           </form>
         </div>
 
+        <!----- Most Searched ----->
         <div class="col-md-6">
           <div class="card most-searched-card mb-3">
             <div class="card-body most-searched-card-body">
@@ -70,17 +71,28 @@
           </div>
         </div>
 
+        <!----- Current Box ----->
         <div class="col-md-6">
           <div class="card default-card mb-3">
-            <div class="card-body">
+            <div class="card-body current-card-body">
               <div class="row">
                 <div class="col-6">
-                  <h1>9°C|°F</h1>
-                  <h2>
-                    <button><i class="fa-solid fa-location-dot"></i></button>
+                  <h1 class="current-temp mb-1">
+                    9<span class="degree-units"
+                      ><a href="#" class="disabled-degree-style">°C</a>
+                      |
+                      <a href="#" class="degree-style">°F</a>
+                    </span>
+                  </h1>
+
+                  <h2 class="current-city mb-3">
+                    <button class="location-icon">
+                      <i class="fa-solid fa-location-dot"></i>
+                    </button>
                     Tehran
                   </h2>
-                  <ul>
+
+                  <ul class="current-data">
                     <li>few clouds</li>
                     <li>9 / 9 Feels like 8</li>
                     <li>Friday, 12:45</li>
@@ -91,7 +103,7 @@
                   <img
                     src="media/partly-cloudy-day-rain.svg"
                     alt="rainy day"
-                    width="200"
+                    class="current-icon"
                   />
                 </div>
               </div>

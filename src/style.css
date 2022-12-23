@@ -26,11 +26,6 @@ body {
 }
 
 /* ----- Search Part ----- */
-.search-box,
-.most-searched-card {
-  font-family: "Quicksand", sans-serif;
-}
-
 .form-control.search-box,
 .btn-outline-secondary,
 .most-searched-card {
@@ -41,6 +36,7 @@ body {
 .search-box,
 .most-searched-card {
   background-color: rgb(68 59 112 / 80%);
+  font-family: "Quicksand", sans-serif;
   transition: all 200ms ease-in-out;
 }
 
@@ -91,8 +87,74 @@ body {
 a.most-searched-city {
   color: rgb(155 205 254);
   text-decoration: none;
+  transition: all 200ms ease-in-out;
 }
 
 .most-searched-city:hover {
   text-decoration: underline;
+}
+
+/* ----- Current Box ----- */
+.current-card-body {
+  padding-right: 185px;
+  padding-left: 27px;
+  height: 265.25px;
+}
+
+.current-temp {
+  display: inline;
+  font-size: 4.5em;
+}
+
+.degree-units {
+  font-size: 37px;
+  position: relative;
+  top: -25px;
+}
+
+.degree-units a {
+  text-decoration: none;
+}
+
+.degree-style {
+  color: rgb(209 103 147);
+}
+
+.degree-style:hover {
+  color: rgb(242 151 163);
+}
+
+.disabled-degree-style {
+  color: #1e173b;
+  pointer-events: none;
+}
+
+.location-icon {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.location-icon:hover {
+  color: rgb(209 103 147);
+}
+
+.current-city {
+  font-size: 37px;
+}
+
+.current-data {
+  font-size: 18px;
+  line-height: 1.5;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.current-icon {
+  display: block;
+  position: absolute;
+  right: 18px;
+  top: 20px;
+  width: 170px;
 }
