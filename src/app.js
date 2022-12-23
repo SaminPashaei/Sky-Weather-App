@@ -1,5 +1,24 @@
+function twoDigit(number) {
+  return String(number).padStart(2, "0");
+}
+
 function updateDate(date) {
-  return "Friday, 16:00";
+  let dayName = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let updateDay = dayName[date.getDay()];
+
+  let updateHour = twoDigit(date.getHours());
+  let updateMinute = twoDigit(date.getMinutes());
+  let updateFullTime = `${updateHour}:${updateMinute}`;
+
+  return `${updateDay}, ${updateFullTime}`;
 }
 
 function getWeatherData(response) {
