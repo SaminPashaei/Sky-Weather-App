@@ -198,9 +198,7 @@ function getWeatherData(response) {
 }
 
 function apiError() {
-  alert(
-    "Unfortunately, we don't have weather information for this city. Please try another one."
-  );
+  alert("Unfortunately, we don't have weather information for this city.");
 }
 
 function callApi(input) {
