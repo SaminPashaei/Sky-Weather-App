@@ -82,48 +82,35 @@
         <div class="col-md-6">
           <div class="card default-card mb-3">
             <div class="card-body current-card-body">
-              <div class="row">
-                <div class="col-6">
-                  <h1 class="current-temp mb-1">
-                    <span id="current-temp"></span
-                    ><span class="degree-units"
-                      ><a href="#" class="disabled-degree-style"> °C</a> |
-                      <a href="#" class="degree-style">°F</a></span
-                    >
-                  </h1>
+              <h1 class="current-temp">
+                <span id="current-temp"></span
+                ><span class="degree-units"
+                  ><a href="#" class="disabled-degree-style"> °C</a> |
+                  <a href="#" class="degree-style">°F</a></span
+                >
+              </h1>
 
-                  <h2 class="current-city mb-3">
-                    <button class="location-icon location-button">
-                      <i class="fa-solid fa-location-dot"></i>
-                    </button>
-                    <span id="city-name"></span>
-                  </h2>
+              <h2 class="current-city">
+                <button class="location-icon location-button">
+                  <i class="fa-solid fa-location-dot"></i>
+                </button>
+                <span class="city-name" id="city-name"></span>
+              </h2>
 
-                  <ul class="current-data">
-                    <li
-                      class="weather-description"
-                      id="weather-description"
-                    ></li>
-                    <li>
-                      <span id="current-min-temp"></span>° /
-                      <span id="current-max-temp"></span>° Feels like
-                      <span id="current-feels-like"></span>°
-                    </li>
-                    <li class="last-update-time">
-                      Last updated on
-                      <span id="last-update-time"></span>
-                    </li>
-                  </ul>
-                </div>
+              <ul class="current-data">
+                <li class="weather-description" id="weather-description"></li>
+                <li>
+                  <span id="current-min-temp"></span>° /
+                  <span id="current-max-temp"></span>° Feels like
+                  <span id="current-feels-like"></span>°
+                </li>
+                <li class="last-update-time">
+                  Last updated on
+                  <span id="last-update-time"></span>
+                </li>
+              </ul>
 
-                <div class="col-6">
-                  <img
-                    src="media/partly-cloudy-day-rain.svg"
-                    alt="rainy day"
-                    class="current-icon"
-                  />
-                </div>
-              </div>
+              <img src="" alt="" class="current-icon" id="current-icon" />
             </div>
           </div>
         </div>
@@ -197,40 +184,28 @@
                     <li class="row forecast-list-item">
                       <div class="col-4 day-title">Saturday</div>
                       <div class="col-4 text-end">
-                        <img src="media/clear-day.svg" class="day-icon" />
-                        <img
-                          src="media/partly-cloudy-night.svg"
-                          class="day-icon"
-                        />
+                        <img src="media/13d.svg" class="day-icon" />
+                        <img src="media/13n.svg" class="day-icon" />
                       </div>
-                      <div class="col-4 text-end day-degree">12° / 5°</div>
+                      <div class="col-4 text-end day-degree">1° / -2°</div>
                     </li>
 
                     <li class="row forecast-list-item">
                       <div class="col-4 day-title">Sunday</div>
                       <div class="col-4 text-end">
-                        <img
-                          src="media/partly-cloudy-day.svg"
-                          class="day-icon"
-                        />
-                        <img src="media/clear-night.svg" class="day-icon" />
+                        <img src="media/13d.svg" class="day-icon" />
+                        <img src="media/02n.svg" class="day-icon" />
                       </div>
-                      <div class="col-4 text-end day-degree">11° / 4°</div>
+                      <div class="col-4 text-end day-degree">3° / -2°</div>
                     </li>
 
                     <li class="row forecast-list-item">
                       <div class="col-4 day-title">Monday</div>
                       <div class="col-4 text-end">
-                        <img
-                          src="media/partly-cloudy-day-rain.svg"
-                          class="day-icon"
-                        />
-                        <img
-                          src="media/partly-cloudy-night.svg"
-                          class="day-icon"
-                        />
+                        <img src="media/03d.svg" class="day-icon" />
+                        <img src="media/02n.svg" class="day-icon" />
                       </div>
-                      <div class="col-4 text-end day-degree">13° / 7°</div>
+                      <div class="col-4 text-end day-degree">3° / -3°</div>
                     </li>
                   </ul>
                 </div>
@@ -240,37 +215,28 @@
                     <li class="row forecast-list-item">
                       <div class="col-4 day-title">Tuesday</div>
                       <div class="col-4 text-end">
-                        <img src="media/cloudy.svg" class="day-icon" />
-                        <img
-                          src="media/partly-cloudy-night.svg"
-                          class="day-icon"
-                        />
+                        <img src="media/04d.svg" class="day-icon" />
+                        <img src="media/03n.svg" class="day-icon" />
                       </div>
-                      <div class="col-4 text-end day-degree">9° / 4°</div>
+                      <div class="col-4 text-end day-degree">3° / -2°</div>
                     </li>
 
                     <li class="row forecast-list-item">
                       <div class="col-4 day-title">Wednesday</div>
                       <div class="col-4 text-end">
-                        <img src="media/clear-day.svg" class="day-icon" />
-                        <img
-                          src="media/partly-cloudy-night.svg"
-                          class="day-icon"
-                        />
+                        <img src="media/10d.svg" class="day-icon" />
+                        <img src="media/04n.svg" class="day-icon" />
                       </div>
-                      <div class="col-4 text-end day-degree">12° / 6°</div>
+                      <div class="col-4 text-end day-degree">3° / -3°</div>
                     </li>
 
                     <li class="row forecast-list-item">
                       <div class="col-4 day-title">Thursday</div>
                       <div class="col-4 text-end">
-                        <img src="media/cloudy.svg" class="day-icon" />
-                        <img
-                          src="media/partly-cloudy-night.svg"
-                          class="day-icon"
-                        />
+                        <img src="media/01d.svg" class="day-icon" />
+                        <img src="media/01n.svg" class="day-icon" />
                       </div>
-                      <div class="col-4 text-end day-degree">11° / 6°</div>
+                      <div class="col-4 text-end day-degree">4° / -3°</div>
                     </li>
                   </ul>
                 </div>

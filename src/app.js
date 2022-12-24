@@ -43,11 +43,13 @@ function getDay(time) {
 
 function getWeatherData(response) {
   let updateDate = new Date(response.data.dt * 1000);
+  let currentIcon = document.querySelector("#current-icon");
 
   document.querySelector("#current-temp").innerHTML = Math.round(
     response.data.main.temp
   );
   document.querySelector("#city-name").innerHTML = response.data.name;
+
   document.querySelector("#weather-description").innerHTML =
     response.data.weather[0].description;
   document.querySelector("#current-min-temp").innerHTML = Math.round(
@@ -62,6 +64,9 @@ function getWeatherData(response) {
   document.querySelector("#last-update-time").innerHTML = `${getDay(
     updateDate
   )}, ${getHour(updateDate)}`;
+
+  currentIcon.src = `media/${response.data.weather[0].icon}.svg`;
+  currentIcon.alt = response.data.weather[0].main;
 
   document.querySelector("#current-humidity").innerHTML =
     response.data.main.humidity;
@@ -146,4 +151,4 @@ function mostSearched() {
 searchEngine();
 mostSearched();
 
-callApi("Tehran");
+callApi("Frankfurt");
