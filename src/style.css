@@ -105,8 +105,8 @@ a.most-searched-city {
 
 /* ----- Current Box ----- */
 .current-card-body {
-  padding: 10px 185px 10px 20px;
   height: 258.5px;
+  padding: 10px 185px 10px 20px;
 }
 
 .current-temp {
@@ -140,7 +140,6 @@ a.most-searched-city {
 .current-city {
   align-items: center;
   display: flex;
-
   height: 76px;
   line-height: 1;
   white-space: initial;
@@ -149,8 +148,8 @@ a.most-searched-city {
 .location-icon {
   background-color: transparent;
   border: none;
-  padding: 0;
   font-size: 35px;
+  padding: 0;
 }
 
 .location-icon:hover {
@@ -158,8 +157,8 @@ a.most-searched-city {
 }
 
 .city-name {
+  font-size: 29px;
   padding-left: 10px;
-  font-size: 31px;
 }
 
 .current-data {
@@ -168,8 +167,6 @@ a.most-searched-city {
   list-style: none;
   margin: 0;
   padding: 0;
-  position: absolute;
-  top: 170px;
 }
 
 .weather-description {
