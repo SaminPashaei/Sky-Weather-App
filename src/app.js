@@ -294,7 +294,7 @@ function changeHorizon(api) {
     horizonHTML += `
                       <div class="col-md-6">
                         <div class="row card-list-item horizon-list-item">
-                          <div class="col-6">
+                          <div class="col-4">
                             <img
                               src="media/${horizon[index]}.svg"
                               alt="${horizon[index]}"
@@ -302,7 +302,7 @@ function changeHorizon(api) {
                           />
                           </div>
 
-                          <div class="col-6">
+                          <div class="col-8">
                             <ul class="horizon-list">
                               <li class="horizon-title">${horizon[index]}</li>
                               <li class="horizon-time">${getTime(
