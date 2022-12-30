@@ -99,7 +99,18 @@ function getWeatherData(response) {
     response.data.current.weather[0].icon,
     response.data.current.weather[0].main
   );
-  // changeDate(new Date(response.data.dt * 1000));
+
+  document.querySelector("#current-time").innerHTML = new Date().toLocaleString(
+    "en-US",
+    {
+      timeZone: response.data.timezone,
+      hour12: false,
+      weekday: "long",
+      hour: "numeric",
+      minute: "numeric",
+    }
+  );
+
   // changeHorizon(
   //   response.data.sys.sunrise * 1000,
   //   response.data.sys.sunset * 1000
