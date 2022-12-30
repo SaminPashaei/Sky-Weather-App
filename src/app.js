@@ -235,11 +235,16 @@ function changeForecast(daily) {
 }
 
 function changeHorizon(api) {
-  let horizon = ["sunrise", "sunset"];
-  let horizonTime = [api.current.sunrise, api.current.sunset];
+  let horizon = ["sunrise", "sunset", "moonrise", "moonset"];
+  let horizonTime = [
+    api.current.sunrise,
+    api.current.sunset,
+    api.daily[0].moonrise,
+    api.daily[0].moonset,
+  ];
 
   let horizonHTML = `<div class="row text-center">`;
-  for (let index = 0; index < 2; index++) {
+  for (let index = 0; index < 4; index++) {
     horizonHTML += `
                       <div class="col-md-6">
                         <div class="row">
