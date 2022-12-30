@@ -31,9 +31,19 @@ body {
 a.most-searched-city,
 .degree-style,
 .location-icon,
-.forecast-list-item,
+.card-list-item,
 .source-link {
   transition: all 200ms ease-in-out;
+}
+
+.card-list-item {
+  background-color: rgb(91 84 129 / 10%);
+  border-radius: 0.375rem;
+  margin: 0 0 11px;
+}
+
+.card-list-item:hover {
+  background-color: rgb(242 151 163 / 45%);
 }
 
 /* ----- Search Part ----- */
@@ -217,15 +227,8 @@ a.most-searched-city {
 }
 
 .forecast-list-item {
-  background-color: rgb(68 59 112 / 10%);
-  border-radius: 0.375rem;
   line-height: 2;
-  margin: 0 0 11px;
   padding: 5px;
-}
-
-.forecast-list-item:hover {
-  background-color: rgb(242 151 163 / 45%);
 }
 
 .day-title {
@@ -247,7 +250,7 @@ a.most-searched-city {
 
 /* ----- Horizon Card ----- */
 .horizon-card-body {
-  padding: 10px 16px;
+  padding: 15px 15px 4px;
 }
 
 .horizon-icon {

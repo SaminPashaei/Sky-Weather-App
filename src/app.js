@@ -161,7 +161,6 @@ function getTime(zone, time) {
   } else if (zone === null) {
     return new Date(time * 1000).toLocaleString("en-US", forecastOptions);
   } else {
-    console.log(new Date(time * 1000).toLocaleString("en-US", horizonOptions));
     return new Date(time * 1000).toLocaleString("en-US", horizonOptions);
   }
 }
@@ -204,7 +203,7 @@ function changeForecast(daily) {
                     `;
     for (let index = dayNum; index < dayNum + 3; index++) {
       forecastHTML += `
-                        <li class="row forecast-list-item">
+                        <li class="row card-list-item forecast-list-item">
                           <div class="col-4 day-title">${getTime(
                             null,
                             daily[index].dt
@@ -247,7 +246,7 @@ function changeHorizon(api) {
   for (let index = 0; index < 4; index++) {
     horizonHTML += `
                       <div class="col-md-6">
-                        <div class="row">
+                        <div class="row card-list-item">
                           <div class="col-6">
                             <img
                               src="media/${horizon[index]}.svg"
