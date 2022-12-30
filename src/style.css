@@ -263,7 +263,7 @@ a.most-searched-city {
 
 .horizon-title {
   color: rgb(124, 124, 124);
-  font-size: 30px;
+  font-size: 26px;
   text-transform: capitalize;
 }
 
@@ -286,11 +286,11 @@ a.most-searched-city {
 
 .moon-phase-title {
   color: rgb(124, 124, 124);
-  font-size: 30px;
+  font-size: 26px;
 }
 
 .moon-phase-name {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 /* ----- Umbrella Card ----- */
@@ -305,7 +305,7 @@ a.most-searched-city {
 .umbrella-msg {
   align-items: center;
   display: flex;
-  font-size: 20px;
+  font-size: 18px;
   height: 120px;
   margin: 0;
   white-space: initial;
