@@ -135,7 +135,7 @@ function changeInfo(api) {
     },
   };
 
-  let infoHTML = `<ul class="info-list">`;
+  let infoHTML = `<ul class="info-list disable-list">`;
   for (let index = 0; index < 5; index++) {
     infoHTML += `
                   <li class="row">
@@ -247,11 +247,11 @@ function changeForecast(daily) {
 
     forecastHTML += `
                       <div class="col-md-6">
-                        <ul class="forecast-list">
+                        <ul class="forecast-list disable-list">
                     `;
     for (let index = dayNum; index < dayNum + 3; index++) {
       forecastHTML += `
-                        <li class="row card-list-item forecast-list-item">
+                        <li class="row card-item forecast-item">
                           <div class="col-4 day-title">${getTime(
                             null,
                             daily[index].dt
@@ -294,7 +294,7 @@ function changeHorizon(api) {
   for (let index = 0; index < 4; index++) {
     horizonHTML += `
                       <div class="col-md-6">
-                        <div class="row card-list-item horizon-list-item">
+                        <div class="row card-item horizon-item">
                           <div class="col-4">
                             <img
                               src="media/${horizon[index]}.svg"
@@ -304,7 +304,7 @@ function changeHorizon(api) {
                           </div>
 
                           <div class="col-8">
-                            <ul class="horizon-list">
+                            <ul class="horizon-list disable-list">
                               <li class="horizon-title">${horizon[index]}</li>
                               <li class="horizon-time">${getTime(
                                 api.timezone,

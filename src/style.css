@@ -16,7 +16,7 @@ body {
   background-color: rgb(187 187 187 / 40%);
   border-radius: 0.375rem;
   margin: 0 auto;
-  padding: 20px;
+  padding: 20px 10px;
 }
 
 .default-card {
@@ -28,7 +28,6 @@ body {
 
 .search-box,
 .most-searched-card,
-a.most-searched-city,
 .degree-style,
 .location-icon,
 .card-list-item,
@@ -36,17 +35,23 @@ a.most-searched-city,
   transition: all 200ms ease-in-out;
 }
 
-.card-list-item {
-  background-color: rgb(91 84 129 / 10%);
-  border-radius: 0.375rem;
-}
-
-.card-list-item:hover {
-  background-color: rgb(242 151 163 / 45%);
+.disable-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .min-temp {
   color: rgb(110 110 110);
+}
+
+.card-item {
+  background-color: rgb(91 84 129 / 10%);
+  border-radius: 0.375rem;
+}
+
+.card-item:hover {
+  background-color: rgb(242 151 163 / 45%);
 }
 
 /* ----- Search Part ----- */
@@ -83,17 +88,17 @@ a.most-searched-city,
   padding: 0 8px;
 }
 
+.btn-outline-secondary:hover,
+.btn.btn-outline-secondary:active {
+  border-color: rgb(242 151 163);
+}
+
 .btn-outline-secondary:hover {
   background-color: rgb(242 151 163);
 }
 
-.btn-outline-secondary:active {
+.btn.btn-outline-secondary:active {
   background-color: rgb(245 210 215);
-}
-
-.btn-outline-secondary:hover,
-.btn-outline-secondary:active {
-  border-color: rgb(242 151 163);
 }
 
 /* ----- Most Searched ----- */
@@ -179,9 +184,6 @@ a.most-searched-city {
 .current-data {
   font-size: 18px;
   line-height: 1.4;
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 .weather-description {
@@ -193,20 +195,17 @@ a.most-searched-city {
 }
 
 .current-icon {
-  display: block;
+  border-radius: 70px;
   position: absolute;
-  right: 18px;
-  top: 20px;
-  width: 170px;
+  right: 10px;
+  top: 18px;
+  width: 160px;
 }
 
 /* ----- Info Box ----- */
 .info-list {
   font-size: 17px;
   line-height: 2.5;
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 .info-icon {
@@ -224,12 +223,9 @@ a.most-searched-city {
 
 .forecast-list {
   font-size: 20px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
-.forecast-list-item {
+.forecast-item {
   line-height: 2;
   margin: 0 0 11px;
   padding: 5px;
@@ -253,30 +249,25 @@ a.most-searched-city {
   padding: 15px 15px 4px;
 }
 
-.horizon-list-item {
+.horizon-item {
   margin: 0 0 11px;
 }
 
-.horizon-icon,
-.moon-phase-icon {
+.horizon-icon {
   width: 120px;
 }
 
 .horizon-list {
-  list-style: none;
-  margin: 0;
   padding: 22px 0;
 }
 
-.horizon-title,
-.moon-phase-title {
+.horizon-title {
   color: rgb(124, 124, 124);
   font-size: 30px;
   text-transform: capitalize;
 }
 
-.horizon-time,
-.moon-phase-name {
+.horizon-time {
   font-size: 20px;
 }
 
@@ -290,8 +281,6 @@ a.most-searched-city {
 }
 
 .moon-phase-list {
-  list-style: none;
-  margin: 0;
   padding: 22px 0;
 }
 
@@ -327,7 +316,6 @@ a.most-searched-city {
   color: #fff;
   font-size: 17px;
   font-weight: 500;
-  padding: 12px 0 0;
   text-align: center;
 }
 
