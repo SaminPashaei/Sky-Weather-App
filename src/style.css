@@ -281,12 +281,12 @@ a.most-searched-city {
 }
 
 /* ----- Moon Phase Card ----- */
-.moon-phase-icon {
-  width: 120px;
-}
-
 .moon-phase-item {
   margin: 0;
+}
+
+.moon-phase-icon {
+  width: 120px;
 }
 
 .moon-phase-list {
@@ -302,6 +302,24 @@ a.most-searched-city {
 
 .moon-phase-name {
   font-size: 20px;
+}
+
+/* ----- Umbrella Card ----- */
+.umbrella-item {
+  margin: 0;
+}
+
+.umbrella-icon {
+  width: 120px;
+}
+
+.umbrella-msg {
+  align-items: center;
+  display: flex;
+  font-size: 20px;
+  height: 120px;
+  margin: 0;
+  white-space: initial;
 }
 
 /* ----- Source Link ----- */

@@ -98,6 +98,7 @@ function getWeatherData(response) {
   changeForecast(response.data.daily);
   changeHorizon(response.data);
   changeMoonPhase(response.data.daily[0].moon_phase);
+  changeTakeUmbrella(response.data.daily[0].pop);
 }
 
 function changeInfo(api) {
@@ -350,6 +351,20 @@ function changeMoonPhase(phase) {
 
   document.querySelector("#moon-phase-icon").src = `media/${moonPhaseIcon}.svg`;
   document.querySelector("#moon-phase-name").innerHTML = moonPhaseName;
+}
+
+function changeTakeUmbrella(pop) {
+  let umbrellaMsg;
+  console.log(pop);
+  if (pop >= 0 && pop < 0.3) {
+    umbrellaMsg = "No need for an umbrella.";
+  } else if (pop >= 0.3 && pop <= 0.6) {
+    umbrellaMsg = "It's better to take an umbrella.";
+  } else if (pop > 0.6 && pop <= 1) {
+    umbrellaMsg = "You should take an umbrella.";
+  }
+
+  document.querySelector("#umbrella-msg").innerHTML = umbrellaMsg;
 }
 
 function showCentigrade() {
