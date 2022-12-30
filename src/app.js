@@ -97,6 +97,7 @@ function getWeatherData(response) {
   changeTemperature(response.data);
   changeForecast(response.data.daily);
   changeHorizon(response.data);
+  changeMoonPhase(response.data.daily[0].moon_phase);
 }
 
 function changeInfo(api) {
@@ -292,7 +293,7 @@ function changeHorizon(api) {
   for (let index = 0; index < 4; index++) {
     horizonHTML += `
                       <div class="col-md-6">
-                        <div class="row card-list-item">
+                        <div class="row card-list-item horizon-list-item">
                           <div class="col-6">
                             <img
                               src="media/${horizon[index]}.svg"
@@ -317,6 +318,38 @@ function changeHorizon(api) {
   horizonHTML += `</div>`;
 
   document.querySelector("#horizon-card-body").innerHTML = horizonHTML;
+}
+
+function changeMoonPhase(phase) {
+  let moonPhaseName, moonPhaseIcon;
+  if (phase === 0 || phase === 1) {
+    moonPhaseName = "New Moon";
+    moonPhaseIcon = "moon-new";
+  } else if (phase > 0 && phase < 0.25) {
+    moonPhaseName = "Waxing Crescent";
+    moonPhaseIcon = "moon-waxing-crescent";
+  } else if (phase === 0.25) {
+    moonPhaseName = "First Quarter";
+    moonPhaseIcon = "moon-first-quarter";
+  } else if (phase > 0.25 && phase < 0.5) {
+    moonPhaseName = "Waxing Gibbous";
+    moonPhaseIcon = "moon-waxing-gibbous";
+  } else if (phase === 0.5) {
+    moonPhaseName = "Full Moon";
+    moonPhaseIcon = "moon-full";
+  } else if (phase > 0.5 && phase < 0.75) {
+    moonPhaseName = "Waning Gibbous";
+    moonPhaseIcon = "moon-waning-gibbous";
+  } else if (phase === 0.75) {
+    moonPhaseName = "Last Quarter";
+    moonPhaseIcon = "moon-last-quarter";
+  } else if (phase > 0.75 && phase < 1) {
+    moonPhaseName = "Waning Crescent";
+    moonPhaseIcon = "moon-waning-crescent";
+  }
+
+  document.querySelector("#moon-phase-icon").src = `media/${moonPhaseIcon}.svg`;
+  document.querySelector("#moon-phase-name").innerHTML = moonPhaseName;
 }
 
 function showCentigrade() {
