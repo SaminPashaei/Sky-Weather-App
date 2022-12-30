@@ -217,6 +217,7 @@ function callApi(input) {
   axios.get(apiUrl).then(getWeatherData, apiError);
 }
 
+let apiKey = "7746bdeabca928cfedcad71e52fd9d66";
 let centigradeDegree,
   fahrenheitDegree,
   currentTemp,
