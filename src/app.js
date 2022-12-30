@@ -106,7 +106,7 @@ function getWeatherData(response) {
     null
   );
 
-  changeTemperature(response.data.current);
+  changeTemperature(response.data);
   changeForecast(response.data.daily);
   changeHorizon(response.data);
 }
@@ -168,16 +168,22 @@ function getTime(zone, time) {
 function changeTemperature(api) {
   centigradeDegree = document.querySelector("#centigrade-degree");
   currentTemp = document.querySelector("#current-temp");
+  currentMaxTemp = document.querySelector("#current-max-temp");
+  currentMinTemp = document.querySelector("#current-min-temp");
   currentFeelsLike = document.querySelector("#current-feels-like");
 
   centigradeTemp = {
-    current: api.temp,
-    feel: api.feels_like,
+    current: api.current.temp,
+    max: api.daily[0].temp.max,
+    min: api.daily[0].temp.min,
+    feel: api.current.feels_like,
   };
 
   fahrenheitTemp = {
-    current: api.temp * 1.8 + 32,
-    feel: api.feels_like * 1.8 + 32,
+    current: api.current.temp * 1.8 + 32,
+    max: api.daily[0].temp.max * 1.8 + 32,
+    min: api.daily[0].temp.min * 1.8 + 32,
+    feel: api.current.feels_like * 1.8 + 32,
   };
 
   if (centigradeDegree.classList.contains("disabled-degree-style")) {
@@ -275,11 +281,15 @@ function changeHorizon(api) {
 
 function showCentigrade() {
   currentTemp.innerHTML = Math.round(centigradeTemp.current);
+  currentMaxTemp.innerHTML = Math.round(centigradeTemp.max);
+  currentMinTemp.innerHTML = Math.round(centigradeTemp.min);
   currentFeelsLike.innerHTML = Math.round(centigradeTemp.feel);
 }
 
 function showFahrenheit() {
   currentTemp.innerHTML = Math.round(fahrenheitTemp.current);
+  currentMaxTemp.innerHTML = Math.round(fahrenheitTemp.max);
+  currentMinTemp.innerHTML = Math.round(fahrenheitTemp.min);
   currentFeelsLike.innerHTML = Math.round(fahrenheitTemp.feel);
 }
 
@@ -309,6 +319,8 @@ let apiKey = "7746bdeabca928cfedcad71e52fd9d66";
 let centigradeDegree,
   fahrenheitDegree,
   currentTemp,
+  currentMaxTemp,
+  currentMinTemp,
   currentFeelsLike,
   centigradeTemp,
   fahrenheitTemp;

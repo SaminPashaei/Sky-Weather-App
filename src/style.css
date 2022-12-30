@@ -46,6 +46,10 @@ a.most-searched-city,
   background-color: rgb(242 151 163 / 45%);
 }
 
+.min-temp {
+  color: rgb(110 110 110);
+}
+
 /* ----- Search Part ----- */
 .form-control.search-box,
 .btn-outline-secondary,
@@ -186,7 +190,7 @@ a.most-searched-city {
 }
 
 .current-time {
-  color: rgb(106 106 106);
+  color: rgb(133 133 133);
 }
 
 .current-icon {
@@ -242,10 +246,6 @@ a.most-searched-city {
 
 .day-degree {
   padding-right: 15px;
-}
-
-.min-temp {
-  color: rgb(106 106 106);
 }
 
 /* ----- Horizon Card ----- */
