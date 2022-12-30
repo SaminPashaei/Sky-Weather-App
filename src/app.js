@@ -161,8 +161,14 @@ function getTime(zone, time) {
     timeStyle: "short",
   };
 
+  forecastOptions = {
+    weekday: "long",
+  };
+
   if (time === null) {
     return new Date().toLocaleString("en-US", localOptions);
+  } else if (zone === null) {
+    return new Date(time * 1000).toLocaleString("en-US", forecastOptions);
   } else {
     return new Date(time * 1000).toLocaleString("en-US", horizonOptions);
   }
@@ -195,24 +201,30 @@ function changeForecast(daily) {
   for (let col = 0; col < 2; col++) {
     let dayNum;
     if (col === 0) {
-      dayNum = 0;
+      dayNum = 1;
     } else {
-      dayNum = 3;
+      dayNum = 4;
     }
 
     forecastHTML += `
                       <div class="col-md-6">
                         <ul class="forecast-list">
                     `;
-    for (let day = dayNum; day < dayNum + 3; day++) {
+    for (let index = dayNum; index < dayNum + 3; index++) {
       forecastHTML += `
                         <li class="row forecast-list-item">
-                          <div class="col-4 day-title">Saturday</div>
-                            <div class="col-4 text-end">
-                              <img src="media/13d.svg" class="day-icon" />
-                              <img src="media/13n.svg" class="day-icon" />
-                            </div>
-                          <div class="col-4 text-end day-degree">1° / -2°</div>
+                          <div class="col-4 day-title">${getTime(
+                            null,
+                            daily[index].dt
+                          )}</div>
+                          <div class="col-4 text-center">
+                            <img src="media/${
+                              daily[index].weather[0].icon
+                            }.svg" class="day-icon" />
+                          </div>
+                          <div class="col-4 text-end day-degree">${Math.round(
+                            daily[index].temp.min
+                          )} / ${Math.round(daily[index].temp.max)}</div>
                         </li>
                       `;
     }
