@@ -82,19 +82,7 @@ function getWeatherData(response) {
   document.querySelector("#weather-description").innerHTML =
     response.data.current.weather[0].description;
 
-  document.querySelector("#current-humidity").innerHTML =
-    response.data.current.humidity;
-  document.querySelector("#current-uvi").innerHTML = Math.round(
-    response.data.current.uvi
-  );
-  document.querySelector("#current-pressure").innerHTML =
-    response.data.current.pressure;
-  document.querySelector("#current-wind-speed").innerHTML = Math.round(
-    response.data.current.wind_speed
-  );
-  document.querySelector("#current-wind-degree").innerHTML = `${
-    response.data.current.wind_deg
-  } (${windDirection(response.data.current.wind_deg)})`;
+  changeInfo(response.data.current);
 
   chnageIcon(
     response.data.current.weather[0].icon,
@@ -109,6 +97,58 @@ function getWeatherData(response) {
   changeTemperature(response.data);
   changeForecast(response.data.daily);
   changeHorizon(response.data);
+}
+
+function changeInfo(api) {
+  let infoObj = {
+    0: {
+      name: "Humidity",
+      icon: "humidity",
+      data: api.humidity,
+      unit: "%",
+    },
+    1: {
+      name: "UV Index",
+      icon: "uv-index",
+      data: api.uvi,
+      unit: "",
+    },
+    2: {
+      name: "Pressure",
+      icon: "barometer",
+      data: api.pressure,
+      unit: "Pa",
+    },
+    3: {
+      name: "Wind Speed",
+      icon: "windsock",
+      data: Math.round(api.wind_speed),
+      unit: "km/h",
+    },
+    4: {
+      name: "Wind Degree",
+      icon: "compass",
+      data: `${api.wind_deg} (${windDirection(api.wind_deg)})`,
+      unit: "",
+    },
+  };
+
+  let infoHTML = `<ul class="info-list">`;
+  for (let index = 0; index < 5; index++) {
+    infoHTML += `
+                  <li class="row">
+                    <div class="col-6 p-0">
+                      <img src="media/${infoObj[index].icon}.svg" class="info-icon" />
+                      <span class="info-title">${infoObj[index].name}</span>
+                    </div>
+                    <div class="col-6 text-end">
+                      ${infoObj[index].data} ${infoObj[index].unit}
+                    </div>
+                  </li>`;
+  }
+  infoHTML += `</ul>`;
+
+  document.querySelector("#info-card-body").innerHTML = infoHTML;
 }
 
 function windDirection(degree) {
