@@ -263,6 +263,7 @@ a.most-searched-city {
 .horizon-title {
   color: rgb(124, 124, 124);
   font-size: 30px;
+  text-transform: capitalize;
 }
 
 .horizon-time {

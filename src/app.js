@@ -106,18 +106,9 @@ function getWeatherData(response) {
     null
   );
 
-  document.querySelector("#sunrise-time").innerHTML = getTime(
-    response.data.timezone,
-    response.data.current.sunrise
-  );
-
-  document.querySelector("#sunset-time").innerHTML = getTime(
-    response.data.timezone,
-    response.data.current.sunset
-  );
-
   changeTemperature(response.data.current);
   changeForecast(response.data.daily);
+  changeHorizon(response.data);
 }
 
 function windDirection(degree) {
@@ -170,6 +161,7 @@ function getTime(zone, time) {
   } else if (zone === null) {
     return new Date(time * 1000).toLocaleString("en-US", forecastOptions);
   } else {
+    console.log(new Date(time * 1000).toLocaleString("en-US", horizonOptions));
     return new Date(time * 1000).toLocaleString("en-US", horizonOptions);
   }
 }
@@ -240,6 +232,41 @@ function changeForecast(daily) {
   forecastHTML += `</div>`;
 
   document.querySelector("#forecast-card-body").innerHTML = forecastHTML;
+}
+
+function changeHorizon(api) {
+  let horizon = ["sunrise", "sunset"];
+  let horizonTime = [api.current.sunrise, api.current.sunset];
+
+  let horizonHTML = `<div class="row text-center">`;
+  for (let index = 0; index < 2; index++) {
+    horizonHTML += `
+                      <div class="col-md-6">
+                        <div class="row">
+                          <div class="col-6">
+                            <img
+                              src="media/${horizon[index]}.svg"
+                              alt="${horizon[index]}"
+                              class="horizon-icon"
+                          />
+                          </div>
+
+                          <div class="col-6">
+                            <ul class="horizon-list">
+                              <li class="horizon-title">${horizon[index]}</li>
+                              <li class="horizon-time">${getTime(
+                                api.timezone,
+                                horizonTime[index]
+                              )}</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    `;
+  }
+  horizonHTML += `</div>`;
+
+  document.querySelector("#horizon-card-body").innerHTML = horizonHTML;
 }
 
 function showCentigrade() {
