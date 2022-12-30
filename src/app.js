@@ -74,79 +74,122 @@ function oneCallApi(lat, lon) {
   let apiEndpoint = "https://api.openweathermap.org/data/2.5/onecall";
   let exclude = "minutely,hourly,alerts";
   let usedUnit = "metric";
+
   let apiUrl = `${apiEndpoint}?lat=${lat}&lon=${lon}&exclude=${exclude}&appid=${apiKey}&units=${usedUnit}`;
   axios.get(apiUrl).then(getWeatherData);
 }
 
 function getWeatherData(response) {
+  weatherApiData = response.data;
+
   document.querySelector("#weather-description").innerHTML =
-    response.data.current.weather[0].description;
-
-  changeInfo(response.data.current);
-
-  chnageIcon(
-    response.data.current.weather[0].icon,
-    response.data.current.weather[0].main
-  );
+    weatherApiData.current.weather[0].description;
 
   document.querySelector("#current-time").innerHTML = getTime(
-    response.data.timezone,
+    weatherApiData.timezone,
     null
   );
 
-  changeTemperature(response.data);
-  changeForecast(response.data.daily);
-  changeHorizon(response.data);
-  changeMoonPhase(response.data.daily[0].moon_phase);
-  changeTakeUmbrella(response.data.daily[0].pop);
+  chnageIcon(
+    weatherApiData.current.weather[0].icon,
+    weatherApiData.current.weather[0].main
+  );
+
+  changeInfo(weatherApiData.current);
+  changeForecast(weatherApiData.daily);
+  changeHorizon(weatherApiData);
+  changeMoonPhase(weatherApiData.daily[0].moon_phase);
+  changeTakeUmbrella(weatherApiData.daily[0].pop);
+
+  centigradeDegree = document.querySelector("#centigrade-degree");
+  if (centigradeDegree.classList.contains("disabled-degree-style")) {
+    getCentigradeData();
+  } else {
+    getFahrenheitData();
+  }
 }
 
-function changeInfo(api) {
-  let infoObj = {
-    0: {
+function getTime(zone, time) {
+  localOptions = {
+    timeZone: zone,
+    hour12: false,
+    weekday: "long",
+    hour: "numeric",
+    minute: "numeric",
+  };
+
+  forecastOptions = {
+    weekday: "long",
+  };
+
+  horizonOptions = {
+    timeZone: zone,
+    hour12: false,
+    timeStyle: "short",
+  };
+
+  if (time === null) {
+    return new Date().toLocaleString("en-US", localOptions);
+  } else if (zone === null) {
+    return new Date(time * 1000).toLocaleString("en-US", forecastOptions);
+  } else {
+    return new Date(time * 1000).toLocaleString("en-US", horizonOptions);
+  }
+}
+
+function chnageIcon(icon, text) {
+  let currentIcon = document.querySelector("#current-icon");
+  currentIcon.src = `media/${icon}.svg`;
+  currentIcon.alt = text;
+}
+
+function changeInfo(current) {
+  let infoData = [
+    {
       name: "Humidity",
       icon: "humidity",
-      data: api.humidity,
+      value: current.humidity,
       unit: "%",
     },
-    1: {
+    {
       name: "UV Index",
       icon: "uv-index",
-      data: api.uvi,
+      value: current.uvi,
       unit: "",
     },
-    2: {
+    {
       name: "Pressure",
       icon: "barometer",
-      data: api.pressure,
+      value: current.pressure,
       unit: "Pa",
     },
-    3: {
+    {
       name: "Wind Speed",
       icon: "windsock",
-      data: Math.round(api.wind_speed),
+      value: Math.round(current.wind_speed),
       unit: "km/h",
     },
-    4: {
+    {
       name: "Wind Degree",
       icon: "compass",
-      data: `${api.wind_deg} (${windDirection(api.wind_deg)})`,
+      value: `${current.wind_deg} (${windDirection(current.wind_deg)})`,
       unit: "",
     },
-  };
+  ];
 
   let infoHTML = `<ul class="info-list disable-list">`;
   for (let index = 0; index < 5; index++) {
     infoHTML += `
                   <li class="row">
                     <div class="col-6 p-0">
-                      <img src="media/${infoObj[index].icon}.svg" class="info-icon" />
-                      <span class="info-title">${infoObj[index].name}</span>
+                      <img src="media/${infoData[index].icon}.svg" class="info-icon" />
+                      <span class="info-title">${infoData[index].name}</span>
                     </div>
                     <div class="col-6 text-end">
-                      ${infoObj[index].data} ${infoObj[index].unit}
+                      ${infoData[index].value} ${infoData[index].unit}
                     </div>
-                  </li>`;
+                  </li>
+                `;
   }
   infoHTML += `</ul>`;
 
@@ -173,68 +216,6 @@ function windDirection(degree) {
   }
 }
 
-function chnageIcon(icon, text) {
-  let currentIcon = document.querySelector("#current-icon");
-  currentIcon.src = `media/${icon}.svg`;
-  currentIcon.alt = text;
-}
-
-function getTime(zone, time) {
-  localOptions = {
-    timeZone: zone,
-    hour12: false,
-    weekday: "long",
-    hour: "numeric",
-    minute: "numeric",
-  };
-
-  horizonOptions = {
-    timeZone: zone,
-    hour12: false,
-    timeStyle: "short",
-  };
-
-  forecastOptions = {
-    weekday: "long",
-  };
-
-  if (time === null) {
-    return new Date().toLocaleString("en-US", localOptions);
-  } else if (zone === null) {
-    return new Date(time * 1000).toLocaleString("en-US", forecastOptions);
-  } else {
-    return new Date(time * 1000).toLocaleString("en-US", horizonOptions);
-  }
-}
-
-function changeTemperature(api) {
-  centigradeDegree = document.querySelector("#centigrade-degree");
-  currentTemp = document.querySelector("#current-temp");
-  currentMaxTemp = document.querySelector("#current-max-temp");
-  currentMinTemp = document.querySelector("#current-min-temp");
-  currentFeelsLike = document.querySelector("#current-feels-like");
-
-  centigradeTemp = {
-    current: api.current.temp,
-    max: api.daily[0].temp.max,
-    min: api.daily[0].temp.min,
-    feel: api.current.feels_like,
-  };
-
-  fahrenheitTemp = {
-    current: api.current.temp * 1.8 + 32,
-    max: api.daily[0].temp.max * 1.8 + 32,
-    min: api.daily[0].temp.min * 1.8 + 32,
-    feel: api.current.feels_like * 1.8 + 32,
-  };
-
-  if (centigradeDegree.classList.contains("disabled-degree-style")) {
-    showCentigrade();
-  } else {
-    showFahrenheit();
-  }
-}
-
 function changeForecast(daily) {
   let forecastHTML = `<div class="row">`;
   for (let col = 0; col < 2; col++) {
@@ -252,21 +233,18 @@ function changeForecast(daily) {
     for (let index = dayNum; index < dayNum + 3; index++) {
       forecastHTML += `
                         <li class="row card-item forecast-item">
-                          <div class="col-4 day-title">${getTime(
-                            null,
-                            daily[index].dt
-                          )}</div>
+                          <div class="col-4 day-title">
+                            ${getTime(null, daily[index].dt)}
+                          </div>
                           <div class="col-4 text-end">
-                            <img src="media/${
-                              daily[index].weather[0].icon
-                            }.svg" class="day-icon" />
+                            <img 
+                              src="media/${daily[index].weather[0].icon}.svg"
+                              class="day-icon"
+                            />
                           </div>
                           <div class="col-4 text-end day-degree">
-                            ${Math.round(daily[index].temp.max)}°   
-                              
-                            <span class="min-temp">
-                              ${Math.round(daily[index].temp.min)}°
-                            </span>
+                            <span class="daily-max-temp"></span>
+                            <span class="min-temp daily-min-temp"></span>
                           </div>
                         </li>
                       `;
@@ -281,13 +259,13 @@ function changeForecast(daily) {
   document.querySelector("#forecast-card-body").innerHTML = forecastHTML;
 }
 
-function changeHorizon(api) {
+function changeHorizon(data) {
   let horizon = ["sunrise", "sunset", "moonrise", "moonset"];
   let horizonTime = [
-    api.current.sunrise,
-    api.current.sunset,
-    api.daily[0].moonrise,
-    api.daily[0].moonset,
+    data.current.sunrise,
+    data.current.sunset,
+    data.daily[0].moonrise,
+    data.daily[0].moonset,
   ];
 
   let horizonHTML = `<div class="row text-center">`;
@@ -306,10 +284,9 @@ function changeHorizon(api) {
                           <div class="col-8">
                             <ul class="horizon-list disable-list">
                               <li class="horizon-title">${horizon[index]}</li>
-                              <li class="horizon-time">${getTime(
-                                api.timezone,
-                                horizonTime[index]
-                              )}</li>
+                              <li class="horizon-time">
+                                ${getTime(data.timezone, horizonTime[index])}
+                              </li>
                             </ul>
                           </div>
                         </div>
@@ -355,30 +332,109 @@ function changeMoonPhase(phase) {
 
 function changeTakeUmbrella(pop) {
   let umbrellaMsg;
-  console.log(pop);
   if (pop >= 0 && pop < 0.3) {
-    umbrellaMsg = "No need for an umbrella.";
+    umbrellaMsg = "No need for an umbrella";
   } else if (pop >= 0.3 && pop <= 0.6) {
-    umbrellaMsg = "It's better to take an umbrella.";
+    umbrellaMsg = "It's better to take an umbrella";
   } else if (pop > 0.6 && pop <= 1) {
-    umbrellaMsg = "You should take an umbrella.";
+    umbrellaMsg = "You should take an umbrella";
   }
 
   document.querySelector("#umbrella-msg").innerHTML = umbrellaMsg;
 }
 
-function showCentigrade() {
-  currentTemp.innerHTML = Math.round(centigradeTemp.current);
-  currentMaxTemp.innerHTML = Math.round(centigradeTemp.max);
-  currentMinTemp.innerHTML = Math.round(centigradeTemp.min);
-  currentFeelsLike.innerHTML = Math.round(centigradeTemp.feel);
+function getCentigradeData() {
+  weatherTemp = [
+    {
+      current: weatherApiData.current.temp,
+      feel: weatherApiData.current.feels_like,
+      max: weatherApiData.daily[0].temp.max,
+      min: weatherApiData.daily[0].temp.min,
+    },
+    {
+      max: weatherApiData.daily[1].temp.max,
+      min: weatherApiData.daily[1].temp.min,
+    },
+    {
+      max: weatherApiData.daily[2].temp.max,
+      min: weatherApiData.daily[2].temp.min,
+    },
+    {
+      max: weatherApiData.daily[3].temp.max,
+      min: weatherApiData.daily[3].temp.min,
+    },
+    {
+      max: weatherApiData.daily[4].temp.max,
+      min: weatherApiData.daily[4].temp.min,
+    },
+    {
+      max: weatherApiData.daily[5].temp.max,
+      min: weatherApiData.daily[5].temp.min,
+    },
+    {
+      max: weatherApiData.daily[6].temp.max,
+      min: weatherApiData.daily[6].temp.min,
+    },
+  ];
+  changeTemperature();
 }
 
-function showFahrenheit() {
-  currentTemp.innerHTML = Math.round(fahrenheitTemp.current);
-  currentMaxTemp.innerHTML = Math.round(fahrenheitTemp.max);
-  currentMinTemp.innerHTML = Math.round(fahrenheitTemp.min);
-  currentFeelsLike.innerHTML = Math.round(fahrenheitTemp.feel);
+function getFahrenheitData() {
+  weatherTemp = [
+    {
+      current: weatherApiData.current.temp * 1.8 + 32,
+      max: weatherApiData.daily[0].temp.max * 1.8 + 32,
+      min: weatherApiData.daily[0].temp.min * 1.8 + 32,
+      feel: weatherApiData.current.feels_like * 1.8 + 32,
+    },
+    {
+      max: weatherApiData.daily[1].temp.max * 1.8 + 32,
+      min: weatherApiData.daily[1].temp.min * 1.8 + 32,
+    },
+    {
+      max: weatherApiData.daily[2].temp.max * 1.8 + 32,
+      min: weatherApiData.daily[2].temp.min * 1.8 + 32,
+    },
+    {
+      max: weatherApiData.daily[3].temp.max * 1.8 + 32,
+      min: weatherApiData.daily[3].temp.min * 1.8 + 32,
+    },
+    {
+      max: weatherApiData.daily[4].temp.max * 1.8 + 32,
+      min: weatherApiData.daily[4].temp.min * 1.8 + 32,
+    },
+    {
+      max: weatherApiData.daily[5].temp.max * 1.8 + 32,
+      min: weatherApiData.daily[5].temp.min * 1.8 + 32,
+    },
+    {
+      max: weatherApiData.daily[6].temp.max * 1.8 + 32,
+      min: weatherApiData.daily[6].temp.min * 1.8 + 32,
+    },
+  ];
+  changeTemperature();
+}
+
+function changeTemperature() {
+  document.querySelector("#current-temp").innerHTML = Math.round(
+    weatherTemp[0].current
+  );
+  document.querySelector("#current-max-temp").innerHTML = Math.round(
+    weatherTemp[0].max
+  );
+  document.querySelector("#current-min-temp").innerHTML = Math.round(
+    weatherTemp[0].min
+  );
+  document.querySelector("#current-feels-like").innerHTML = Math.round(
+    weatherTemp[0].feel
+  );
+
+  let dailyMaxTemp = document.querySelectorAll(".daily-max-temp");
+  let dailyMinTemp = document.querySelectorAll(".daily-min-temp");
+  for (let day = 0; day < 6; day++) {
+    dailyMaxTemp[day].innerHTML = `${Math.round(weatherTemp[day + 1].max)}°`;
+    dailyMinTemp[day].innerHTML = `${Math.round(weatherTemp[day + 1].min)}°`;
+  }
 }
 
 function changeScale() {
@@ -393,14 +449,14 @@ function convertToFahrenheit(event) {
   event.preventDefault();
   fahrenheitDegree.classList.replace("degree-style", "disabled-degree-style");
   centigradeDegree.classList.replace("disabled-degree-style", "degree-style");
-  showFahrenheit();
+  getFahrenheitData();
 }
 
 function convertToCentigrade(event) {
   event.preventDefault();
   fahrenheitDegree.classList.replace("disabled-degree-style", "degree-style");
   centigradeDegree.classList.replace("degree-style", "disabled-degree-style");
-  showCentigrade();
+  getCentigradeData();
 }
 
 let apiKey = "7746bdeabca928cfedcad71e52fd9d66";
@@ -409,10 +465,10 @@ let centigradeDegree,
   currentTemp,
   currentMaxTemp,
   currentMinTemp,
-  currentFeelsLike,
-  centigradeTemp,
-  fahrenheitTemp;
+  currentFeelsLike;
 
-getCityApi("Frankfurt");
+var weatherTemp, weatherApiData;
+
+getCityApi("Tehran");
 searchEngine();
 changeScale();
