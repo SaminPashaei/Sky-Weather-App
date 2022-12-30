@@ -82,16 +82,6 @@ function getWeatherData(response) {
   document.querySelector("#weather-description").innerHTML =
     response.data.current.weather[0].description;
 
-  document.querySelector("#current-time").innerHTML = getTime(
-    response.data.timezone,
-    null
-  );
-
-  chnageIcon(
-    response.data.current.weather[0].icon,
-    response.data.current.weather[0].main
-  );
-
   document.querySelector("#current-humidity").innerHTML =
     response.data.current.humidity;
   document.querySelector("#current-uvi").innerHTML = Math.round(
@@ -106,6 +96,16 @@ function getWeatherData(response) {
     response.data.current.wind_deg
   } (${windDirection(response.data.current.wind_deg)})`;
 
+  chnageIcon(
+    response.data.current.weather[0].icon,
+    response.data.current.weather[0].main
+  );
+
+  document.querySelector("#current-time").innerHTML = getTime(
+    response.data.timezone,
+    null
+  );
+
   document.querySelector("#sunrise-time").innerHTML = getTime(
     response.data.timezone,
     response.data.current.sunrise
@@ -117,6 +117,7 @@ function getWeatherData(response) {
   );
 
   changeTemperature(response.data.current);
+  changeForecast(response.data.daily);
 }
 
 function windDirection(degree) {
@@ -170,8 +171,6 @@ function getTime(zone, time) {
 function changeTemperature(api) {
   centigradeDegree = document.querySelector("#centigrade-degree");
   currentTemp = document.querySelector("#current-temp");
-  currentMinTemp = document.querySelector("#current-min-temp");
-  currentMaxTemp = document.querySelector("#current-max-temp");
   currentFeelsLike = document.querySelector("#current-feels-like");
 
   centigradeTemp = {
@@ -189,6 +188,42 @@ function changeTemperature(api) {
   } else {
     showFahrenheit();
   }
+}
+
+function changeForecast(daily) {
+  let forecastHTML = `<div class="row">`;
+  for (let col = 0; col < 2; col++) {
+    let dayNum;
+    if (col === 0) {
+      dayNum = 0;
+    } else {
+      dayNum = 3;
+    }
+
+    forecastHTML += `
+                      <div class="col-md-6">
+                        <ul class="forecast-list">
+                    `;
+    for (let day = dayNum; day < dayNum + 3; day++) {
+      forecastHTML += `
+                        <li class="row forecast-list-item">
+                          <div class="col-4 day-title">Saturday</div>
+                            <div class="col-4 text-end">
+                              <img src="media/13d.svg" class="day-icon" />
+                              <img src="media/13n.svg" class="day-icon" />
+                            </div>
+                          <div class="col-4 text-end day-degree">1° / -2°</div>
+                        </li>
+                      `;
+    }
+    forecastHTML += `
+                        </ul>
+                      </div>
+                    `;
+  }
+  forecastHTML += `</div>`;
+
+  document.querySelector("#forecast-card-body").innerHTML = forecastHTML;
 }
 
 function showCentigrade() {
