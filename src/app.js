@@ -112,7 +112,7 @@ function getWeatherData(response) {
 function getTime(zone, time) {
   localOptions = {
     timeZone: zone,
-    hour12: false,
+    hourCycle: "h23",
     weekday: "long",
     hour: "numeric",
     minute: "numeric",
@@ -124,7 +124,7 @@ function getTime(zone, time) {
 
   horizonOptions = {
     timeZone: zone,
-    hour12: false,
+    hourCycle: "h23",
     timeStyle: "short",
   };
 
@@ -260,12 +260,23 @@ function changeForecast(daily) {
 }
 
 function changeHorizon(data) {
-  let horizon = ["sunrise", "sunset", "moonrise", "moonset"];
-  let horizonTime = [
-    data.current.sunrise,
-    data.current.sunset,
-    data.daily[0].moonrise,
-    data.daily[0].moonset,
+  let horizonData = [
+    {
+      name: "sunrise",
+      time: data.current.sunrise,
+    },
+    {
+      name: "sunset",
+      time: data.current.sunset,
+    },
+    {
+      name: "moonrise",
+      time: data.daily[0].moonrise,
+    },
+    {
+      name: "moonset",
+      time: data.daily[0].moonset,
+    },
   ];
 
   let horizonHTML = `<div class="row text-center">`;
@@ -275,17 +286,21 @@ function changeHorizon(data) {
                         <div class="row card-item horizon-item">
                           <div class="col-4">
                             <img
-                              src="media/${horizon[index]}.svg"
-                              alt="${horizon[index]}"
+                              src="media/${horizonData[index].name}.svg"
                               class="horizon-icon"
                           />
                           </div>
 
                           <div class="col-8">
                             <ul class="horizon-list disable-list">
-                              <li class="horizon-title">${horizon[index]}</li>
+                              <li class="horizon-title">${
+                                horizonData[index].name
+                              }</li>
                               <li class="horizon-time">
-                                ${getTime(data.timezone, horizonTime[index])}
+                                ${getTime(
+                                  data.timezone,
+                                  horizonData[index].time
+                                )}
                               </li>
                             </ul>
                           </div>
@@ -383,9 +398,9 @@ function getFahrenheitData() {
   weatherTemp = [
     {
       current: weatherApiData.current.temp * 1.8 + 32,
+      feel: weatherApiData.current.feels_like * 1.8 + 32,
       max: weatherApiData.daily[0].temp.max * 1.8 + 32,
       min: weatherApiData.daily[0].temp.min * 1.8 + 32,
-      feel: weatherApiData.current.feels_like * 1.8 + 32,
     },
     {
       max: weatherApiData.daily[1].temp.max * 1.8 + 32,
@@ -460,14 +475,7 @@ function convertToCentigrade(event) {
 }
 
 let apiKey = "7746bdeabca928cfedcad71e52fd9d66";
-let centigradeDegree,
-  fahrenheitDegree,
-  currentTemp,
-  currentMaxTemp,
-  currentMinTemp,
-  currentFeelsLike;
-
-var weatherTemp, weatherApiData;
+let centigradeDegree, fahrenheitDegree, weatherTemp, weatherApiData;
 
 getCityApi("Tehran");
 searchEngine();
