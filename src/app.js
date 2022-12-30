@@ -217,14 +217,18 @@ function changeForecast(daily) {
                             null,
                             daily[index].dt
                           )}</div>
-                          <div class="col-4 text-center">
+                          <div class="col-4 text-end">
                             <img src="media/${
                               daily[index].weather[0].icon
                             }.svg" class="day-icon" />
                           </div>
-                          <div class="col-4 text-end day-degree">${Math.round(
-                            daily[index].temp.min
-                          )} / ${Math.round(daily[index].temp.max)}</div>
+                          <div class="col-4 text-end day-degree">
+                            ${Math.round(daily[index].temp.max)}°   
+                              
+                            <span class="min-temp">
+                              ${Math.round(daily[index].temp.min)}°
+                            </span>
+                          </div>
                         </li>
                       `;
     }

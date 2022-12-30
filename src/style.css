@@ -206,7 +206,7 @@ a.most-searched-city {
 
 /* ----- Forecast Card ----- */
 .forecast-card-body {
-  padding: 20px 16px 7px;
+  padding: 15px 15px 4px;
 }
 
 .forecast-list {
@@ -219,7 +219,8 @@ a.most-searched-city {
 .forecast-list-item {
   background-color: rgb(68 59 112 / 10%);
   border-radius: 0.375rem;
-  margin: 0 0 13px;
+  line-height: 2;
+  margin: 0 0 11px;
   padding: 5px;
 }
 
@@ -229,15 +230,19 @@ a.most-searched-city {
 
 .day-title {
   font-weight: bold;
-  padding-left: 7px;
+  padding-left: 15px;
 }
 
 .day-icon {
-  width: 30px;
+  width: 36px;
 }
 
 .day-degree {
-  padding-right: 7px;
+  padding-right: 15px;
+}
+
+.min-temp {
+  color: rgb(106 106 106);
 }
 
 /* ----- Horizon Card ----- */
