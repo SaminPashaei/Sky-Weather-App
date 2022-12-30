@@ -81,6 +81,17 @@ function oneCallApi(lat, lon) {
 function getWeatherData(response) {
   document.querySelector("#weather-description").innerHTML =
     response.data.current.weather[0].description;
+
+  document.querySelector("#current-time").innerHTML = getTime(
+    response.data.timezone,
+    null
+  );
+
+  chnageIcon(
+    response.data.current.weather[0].icon,
+    response.data.current.weather[0].main
+  );
+
   document.querySelector("#current-humidity").innerHTML =
     response.data.current.humidity;
   document.querySelector("#current-uvi").innerHTML = Math.round(
@@ -95,26 +106,16 @@ function getWeatherData(response) {
     response.data.current.wind_deg
   } (${windDirection(response.data.current.wind_deg)})`;
 
-  chnageIcon(
-    response.data.current.weather[0].icon,
-    response.data.current.weather[0].main
+  document.querySelector("#sunrise-time").innerHTML = getTime(
+    response.data.timezone,
+    response.data.current.sunrise
   );
 
-  document.querySelector("#current-time").innerHTML = new Date().toLocaleString(
-    "en-US",
-    {
-      timeZone: response.data.timezone,
-      hour12: false,
-      weekday: "long",
-      hour: "numeric",
-      minute: "numeric",
-    }
+  document.querySelector("#sunset-time").innerHTML = getTime(
+    response.data.timezone,
+    response.data.current.sunset
   );
 
-  // changeHorizon(
-  //   response.data.sys.sunrise * 1000,
-  //   response.data.sys.sunset * 1000
-  // );
   changeTemperature(response.data.current);
 }
 
@@ -144,34 +145,26 @@ function chnageIcon(icon, text) {
   currentIcon.alt = text;
 }
 
-function changeDate(date) {
-  let dayName = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  document.querySelector("#last-update-time").innerHTML = `${
-    dayName[date.getDay()]
-  }, ${getHour(date)}`;
-}
+function getTime(zone, time) {
+  localOptions = {
+    timeZone: zone,
+    hour12: false,
+    weekday: "long",
+    hour: "numeric",
+    minute: "numeric",
+  };
 
-function getHour(time) {
-  let timeHour = twoDigit(time.getHours());
-  let timeMinute = twoDigit(time.getMinutes());
-  return `${timeHour}:${timeMinute}`;
-}
+  horizonOptions = {
+    timeZone: zone,
+    hour12: false,
+    timeStyle: "short",
+  };
 
-function twoDigit(number) {
-  return String(number).padStart(2, "0");
-}
-
-function changeHorizon(rise, set) {
-  document.querySelector("#sunrise-time").innerHTML = getHour(new Date(rise));
-  document.querySelector("#sunset-time").innerHTML = getHour(new Date(set));
+  if (time === null) {
+    return new Date().toLocaleString("en-US", localOptions);
+  } else {
+    return new Date(time * 1000).toLocaleString("en-US", horizonOptions);
+  }
 }
 
 function changeTemperature(api) {
