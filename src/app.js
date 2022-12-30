@@ -80,126 +80,31 @@ function oneCallApi(lat, lon) {
 
 function getWeatherData(response) {
   document.querySelector("#weather-description").innerHTML =
-    response.data.weather[0].description;
+    response.data.current.weather[0].description;
   document.querySelector("#current-humidity").innerHTML =
-    response.data.main.humidity;
+    response.data.current.humidity;
+  document.querySelector("#current-uvi").innerHTML = Math.round(
+    response.data.current.uvi
+  );
   document.querySelector("#current-pressure").innerHTML =
-    response.data.main.pressure;
-  document.querySelector("#current-wind-speed").innerHTML =
-    response.data.wind.speed;
-  document.querySelector("#current-wind-degree").innerHTML =
-    response.data.wind.deg;
-  document.querySelector("#current-wind-direction").innerHTML = windDirection(
-    response.data.wind.deg
+    response.data.current.pressure;
+  document.querySelector("#current-wind-speed").innerHTML = Math.round(
+    response.data.current.wind_speed
   );
+  document.querySelector("#current-wind-degree").innerHTML = `${
+    response.data.current.wind_deg
+  } (${windDirection(response.data.current.wind_deg)})`;
 
-  chnageIcon(response.data.weather[0].icon, response.data.weather[0].main);
-  changeDate(new Date(response.data.dt * 1000));
-  changeHorizon(
-    response.data.sys.sunrise * 1000,
-    response.data.sys.sunset * 1000
+  chnageIcon(
+    response.data.current.weather[0].icon,
+    response.data.current.weather[0].main
   );
-  changeTemperature(response.data.main);
-}
-
-function showFahrenheit() {
-  currentTemp.innerHTML = Math.round(fahrenheitTemp.current);
-  currentMinTemp.innerHTML = Math.round(fahrenheitTemp.min);
-  currentMaxTemp.innerHTML = Math.round(fahrenheitTemp.max);
-  currentFeelsLike.innerHTML = Math.round(fahrenheitTemp.feel);
-}
-
-function showCentigrade() {
-  currentTemp.innerHTML = Math.round(centigradeTemp.current);
-  currentMinTemp.innerHTML = Math.round(centigradeTemp.min);
-  currentMaxTemp.innerHTML = Math.round(centigradeTemp.max);
-  currentFeelsLike.innerHTML = Math.round(centigradeTemp.feel);
-}
-
-function convertToCentigrade(event) {
-  event.preventDefault();
-  fahrenheitDegree.classList.replace("disabled-degree-style", "degree-style");
-  centigradeDegree.classList.replace("degree-style", "disabled-degree-style");
-  showCentigrade();
-}
-
-function convertToFahrenheit(event) {
-  event.preventDefault();
-  fahrenheitDegree.classList.replace("degree-style", "disabled-degree-style");
-  centigradeDegree.classList.replace("disabled-degree-style", "degree-style");
-  showFahrenheit();
-}
-
-function changeScale() {
-  fahrenheitDegree = document.querySelector("#fahrenheit-degree");
-  centigradeDegree = document.querySelector("#centigrade-degree");
-
-  fahrenheitDegree.addEventListener("click", convertToFahrenheit);
-  centigradeDegree.addEventListener("click", convertToCentigrade);
-}
-
-function changeTemperature(api) {
-  centigradeDegree = document.querySelector("#centigrade-degree");
-  currentTemp = document.querySelector("#current-temp");
-  currentMinTemp = document.querySelector("#current-min-temp");
-  currentMaxTemp = document.querySelector("#current-max-temp");
-  currentFeelsLike = document.querySelector("#current-feels-like");
-
-  centigradeTemp = {
-    current: api.temp,
-    min: api.temp_min,
-    max: api.temp_max,
-    feel: api.feels_like,
-  };
-
-  fahrenheitTemp = {
-    current: api.temp * 1.8 + 32,
-    min: api.temp_min * 1.8 + 32,
-    max: api.temp_max * 1.8 + 32,
-    feel: api.feels_like * 1.8 + 32,
-  };
-
-  if (centigradeDegree.classList.contains("disabled-degree-style")) {
-    showCentigrade();
-  } else {
-    showFahrenheit();
-  }
-}
-
-function twoDigit(number) {
-  return String(number).padStart(2, "0");
-}
-
-function getHour(time) {
-  let timeHour = twoDigit(time.getHours());
-  let timeMinute = twoDigit(time.getMinutes());
-  return `${timeHour}:${timeMinute}`;
-}
-
-function changeHorizon(rise, set) {
-  document.querySelector("#sunrise-time").innerHTML = getHour(new Date(rise));
-  document.querySelector("#sunset-time").innerHTML = getHour(new Date(set));
-}
-
-function changeDate(date) {
-  let dayName = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  document.querySelector("#last-update-time").innerHTML = `${
-    dayName[date.getDay()]
-  }, ${getHour(date)}`;
-}
-
-function chnageIcon(icon, text) {
-  let currentIcon = document.querySelector("#current-icon");
-  currentIcon.src = `media/${icon}.svg`;
-  currentIcon.alt = text;
+  // changeDate(new Date(response.data.dt * 1000));
+  // changeHorizon(
+  //   response.data.sys.sunrise * 1000,
+  //   response.data.sys.sunset * 1000
+  // );
+  changeTemperature(response.data.current);
 }
 
 function windDirection(degree) {
@@ -222,16 +127,106 @@ function windDirection(degree) {
   }
 }
 
+function chnageIcon(icon, text) {
+  let currentIcon = document.querySelector("#current-icon");
+  currentIcon.src = `media/${icon}.svg`;
+  currentIcon.alt = text;
+}
+
+function changeDate(date) {
+  let dayName = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  document.querySelector("#last-update-time").innerHTML = `${
+    dayName[date.getDay()]
+  }, ${getHour(date)}`;
+}
+
+function getHour(time) {
+  let timeHour = twoDigit(time.getHours());
+  let timeMinute = twoDigit(time.getMinutes());
+  return `${timeHour}:${timeMinute}`;
+}
+
+function twoDigit(number) {
+  return String(number).padStart(2, "0");
+}
+
+function changeHorizon(rise, set) {
+  document.querySelector("#sunrise-time").innerHTML = getHour(new Date(rise));
+  document.querySelector("#sunset-time").innerHTML = getHour(new Date(set));
+}
+
+function changeTemperature(api) {
+  centigradeDegree = document.querySelector("#centigrade-degree");
+  currentTemp = document.querySelector("#current-temp");
+  currentMinTemp = document.querySelector("#current-min-temp");
+  currentMaxTemp = document.querySelector("#current-max-temp");
+  currentFeelsLike = document.querySelector("#current-feels-like");
+
+  centigradeTemp = {
+    current: api.temp,
+    feel: api.feels_like,
+  };
+
+  fahrenheitTemp = {
+    current: api.temp * 1.8 + 32,
+    feel: api.feels_like * 1.8 + 32,
+  };
+
+  if (centigradeDegree.classList.contains("disabled-degree-style")) {
+    showCentigrade();
+  } else {
+    showFahrenheit();
+  }
+}
+
+function showCentigrade() {
+  currentTemp.innerHTML = Math.round(centigradeTemp.current);
+  currentFeelsLike.innerHTML = Math.round(centigradeTemp.feel);
+}
+
+function showFahrenheit() {
+  currentTemp.innerHTML = Math.round(fahrenheitTemp.current);
+  currentFeelsLike.innerHTML = Math.round(fahrenheitTemp.feel);
+}
+
+function changeScale() {
+  fahrenheitDegree = document.querySelector("#fahrenheit-degree");
+  centigradeDegree = document.querySelector("#centigrade-degree");
+
+  fahrenheitDegree.addEventListener("click", convertToFahrenheit);
+  centigradeDegree.addEventListener("click", convertToCentigrade);
+}
+
+function convertToFahrenheit(event) {
+  event.preventDefault();
+  fahrenheitDegree.classList.replace("degree-style", "disabled-degree-style");
+  centigradeDegree.classList.replace("disabled-degree-style", "degree-style");
+  showFahrenheit();
+}
+
+function convertToCentigrade(event) {
+  event.preventDefault();
+  fahrenheitDegree.classList.replace("disabled-degree-style", "degree-style");
+  centigradeDegree.classList.replace("degree-style", "disabled-degree-style");
+  showCentigrade();
+}
+
 let apiKey = "7746bdeabca928cfedcad71e52fd9d66";
 let centigradeDegree,
   fahrenheitDegree,
   currentTemp,
-  currentMinTemp,
-  currentMaxTemp,
   currentFeelsLike,
   centigradeTemp,
   fahrenheitTemp;
 
 getCityApi("Frankfurt");
-changeScale();
 searchEngine();
+changeScale();
